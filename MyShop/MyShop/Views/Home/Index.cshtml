@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/views/shared/_Layoutogani.cshtml";
 }
@@ -25,3 +25,4 @@
 <div class="product__pagination">
     @Html.PagedListPager(Model, page=>Url.Action("Index", new{page=page}))
 </div>
+
