@@ -1,4 +1,4 @@
-using Azure;
+﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Models;
@@ -34,6 +34,14 @@ namespace MyShop.Controllers
             PagedList<TDanhMucSp> lst = new PagedList<TDanhMucSp>(lstsanpham, pageNumber, pageSize);
             ViewBag.maloai=maloai;
             return View(lst);
+        }
+
+        public IActionResult ChiTietSanPham(string maSp)
+        {
+            var sanPham = db.TDanhMucSps.SingleOrDefault(x=>x.MaSp==maSp);
+            var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+            ViewBag.anhSanPham = anhSanPham;
+            return View(sanPham);
         }
 
         public IActionResult Privacy()
