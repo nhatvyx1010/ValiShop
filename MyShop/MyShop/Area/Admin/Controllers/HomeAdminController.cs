@@ -51,5 +51,31 @@ namespace MyShop.Areas.Admin.Controllers
             }
             return View(sanPham);
         }
+
+        [Route("ChinhSuaSanPham")]
+        [HttpGet]
+        public IActionResult ChinhSuaSanPham(string maSanPham)
+        {
+            ViewBag.MaChatLieu = new SelectList(db.TChatLieus.ToList(), "MaChatLieu", "ChatLieu");
+            ViewBag.MaHangSx = new SelectList(db.THangSxes.ToList(), "MaHangSx", "HangSx");
+            ViewBag.MaNuocSx = new SelectList(db.TQuocGia.ToList(), "MaNuoc", "TenNuoc");
+            ViewBag.MaLoai = new SelectList(db.TLoaiSps.ToList(), "MaLoai", "Loai");
+            ViewBag.MaDt = new SelectList(db.TLoaiDts.ToList(), "MaDt", "TenLoai");
+            var sanPham = db.TDanhMucSps.Find(maSanPham);
+            return View(sanPham);
+        }
+        [Route("ChinhSuaSanPham")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ChinhSuaSanPham(TDanhMucSp sanPham)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(sanPham).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("DanhMucSanPham", "HomeAdmin");
+            }
+            return View(sanPham);
+        }
     }
 }
