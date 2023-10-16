@@ -77,5 +77,23 @@ namespace MyShop.Areas.Admin.Controllers
             }
             return View(sanPham);
         }
+        [Route("XoaSanPham")]
+        [HttpGet]
+        public IActionResult XoaSanPham(string maSanPham)
+        {
+            TempData["Message"] = "";
+            var chiTietSanPhams=db.TChiTietSanPhams.Where(x=>x.MaSp==maSanPham).ToList();
+            if (chiTietSanPhams.Count() > 0)
+            {
+                TempData["Message"] = "Không xóa được sản phẩm này";
+                return RedirectToAction("DanhMucSAnPham", "HomeAdmin");
+            }
+            var anhSanPhams=db.TAnhSps.Where(x=>x.MaSp==maSanPham);
+            if (anhSanPhams.Any()) db.RemoveRange(anhSanPhams);
+            db.Remove(db.TDanhMucSps.Find(maSanPham));
+            db.SaveChanges();
+            TempData["Message"] = "Sản phẩm đã được xóa";
+            return RedirectToAction("DanhMucSAnPham", "HomeAdmin");
+        }
     }
 }
