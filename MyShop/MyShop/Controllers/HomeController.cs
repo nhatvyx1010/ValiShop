@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Models;
+using MyShop.Models.Authentication;
 using System.Diagnostics;
 using X.PagedList;
 
@@ -16,6 +17,7 @@ namespace MyShop.Controllers
         {
             _logger = logger;
         }
+        [Authentication]
 
         public IActionResult Index(int? page)
         {
@@ -25,7 +27,7 @@ namespace MyShop.Controllers
             PagedList<TDanhMucSp> lst=new PagedList<TDanhMucSp>(lstsanpham, pageNumber, pageSize);
             return View(lst);
         }
-
+        [Authentication]
         public IActionResult SanPhamTheoLoai(String maloai, int? page)
         {
             int pageSize = 8;
@@ -35,7 +37,6 @@ namespace MyShop.Controllers
             ViewBag.maloai=maloai;
             return View(lst);
         }
-
         public IActionResult ChiTietSanPham(string maSp)
         {
             var sanPham = db.TDanhMucSps.SingleOrDefault(x=>x.MaSp==maSp);
