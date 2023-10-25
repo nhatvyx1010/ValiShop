@@ -17,7 +17,7 @@ namespace MyShop.Controllers
         {
             _logger = logger;
         }
-        [Authentication]
+        //[Authentication]
 
         public IActionResult Index(int? page)
         {
@@ -27,7 +27,7 @@ namespace MyShop.Controllers
             PagedList<TDanhMucSp> lst=new PagedList<TDanhMucSp>(lstsanpham, pageNumber, pageSize);
             return View(lst);
         }
-        [Authentication]
+        //[Authentication]
         public IActionResult SanPhamTheoLoai(String maloai, int? page)
         {
             int pageSize = 8;
